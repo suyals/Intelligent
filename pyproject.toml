@@ -1,0 +1,20 @@
+[project]
+name = "intelligent-student-complaint-classifier"
+version = "1.0.0"
+description = "Intelligent Student Complaint Classification & Priority Prediction System"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "fastapi>=0.110.0",
+    "uvicorn>=0.28.0",
+    "pydantic>=2.6.0",
+    "scikit-learn>=1.4.0",
+    "pandas>=2.2.0",
+    "numpy>=1.26.0",
+    "joblib>=1.3.0",
+    "python-multipart>=0.0.9",
+    "requests>=2.31.0"
+]
+
+[tool.vercel]
+entrypoint = "api/index.py:app"

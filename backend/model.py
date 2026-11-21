@@ -19,7 +19,16 @@ PRIORITY_ACTION = {
 }
 
 class ModelManager:
-    def __init__(self, models_dir: str = "models"):
+    def __init__(self, models_dir: str = None):
+        if not models_dir:
+            base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            candidate = os.path.join(base_dir, "models")
+            if os.path.exists(candidate):
+                models_dir = candidate
+            elif os.path.exists("models"):
+                models_dir = os.path.abspath("models")
+            else:
+                models_dir = candidate
         self.models_dir = models_dir
         self.vectorizer = None
         self.priority_model = None

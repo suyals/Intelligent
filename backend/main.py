@@ -35,12 +35,21 @@ app.add_middleware(
 )
 
 # Initialize Model Manager immediately at startup
+def get_model_manager():
+    global model_manager
+    if model_manager is None or not getattr(model_manager, "loaded", False):
+        try:
+            model_manager = ModelManager()
+            print("Backend: ML models, vectorizer, and metadata loaded successfully.")
+        except Exception as e:
+            print(f"Backend Warning: Failed to load models: {e}")
+    return model_manager
+
+model_manager = None
 try:
-    model_manager = ModelManager(models_dir="models")
-    print("Backend: ML models, vectorizer, and metadata loaded successfully.")
-except Exception as e:
-    model_manager = None
-    print(f"Backend Warning: Failed to load models on startup: {e}")
+    model_manager = get_model_manager()
+except Exception:
+    pass
 
 # Predefined representative sample queries from the dataset
 SAMPLE_QUERIES: List[SampleQuery] = [
@@ -113,9 +122,9 @@ SAMPLE_QUERIES: List[SampleQuery] = [
 @app.get("/health", response_model=HealthResponse)
 @app.get("/api/health", response_model=HealthResponse)
 def health_check():
-    global model_manager
-    is_loaded = model_manager is not None and model_manager.loaded
-    vocab_len = len(model_manager.vectorizer.vocabulary_) if is_loaded and model_manager.vectorizer else 0
+    mgr = get_model_manager()
+    is_loaded = mgr is not None and mgr.loaded
+    vocab_len = len(mgr.vectorizer.vocabulary_) if is_loaded and mgr.vectorizer else 0
     return HealthResponse(
         status="healthy" if is_loaded else "degraded",
         version="1.0.0",
@@ -128,8 +137,8 @@ def health_check():
 @app.post("/predict", response_model=PredictionResult)
 @app.post("/api/predict", response_model=PredictionResult)
 def predict_complaint(payload: ComplaintRequest):
-    global model_manager
-    if model_manager is None or not model_manager.loaded:
+    mgr = get_model_manager()
+    if mgr is None or not mgr.loaded:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="Machine learning models are not yet loaded. Please run 'python scripts/train.py'."
@@ -143,7 +152,7 @@ def predict_complaint(payload: ComplaintRequest):
         )
 
     try:
-        result = model_manager.predict(text)
+        result = mgr.predict(text)
         return result
     except Exception as e:
         raise HTTPException(
@@ -155,8 +164,8 @@ def predict_complaint(payload: ComplaintRequest):
 @app.post("/predict-batch", response_model=BatchPredictionResponse)
 @app.post("/api/predict-batch", response_model=BatchPredictionResponse)
 def predict_batch_complaints(payload: BatchComplaintRequest):
-    global model_manager
-    if model_manager is None or not model_manager.loaded:
+    mgr = get_model_manager()
+    if mgr is None or not mgr.loaded:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="Machine learning models are not yet loaded."
@@ -165,7 +174,7 @@ def predict_batch_complaints(payload: BatchComplaintRequest):
     predictions = []
     for text in payload.complaints:
         if text and text.strip():
-            predictions.append(model_manager.predict(text.strip()))
+            predictions.append(mgr.predict(text.strip()))
         
     return BatchPredictionResponse(
         total=len(predictions),
@@ -176,13 +185,13 @@ def predict_batch_complaints(payload: BatchComplaintRequest):
 @app.get("/analytics", response_model=AnalyticsResponse)
 @app.get("/api/analytics", response_model=AnalyticsResponse)
 def get_analytics():
-    global model_manager
-    if model_manager is None or model_manager.model_metrics is None:
+    mgr = get_model_manager()
+    if mgr is None or mgr.model_metrics is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Model analytics not found. Ensure the model has been trained."
         )
-    return model_manager.model_metrics
+    return mgr.model_metrics
 
 # Sample queries endpoint
 @app.get("/sample-queries", response_model=List[SampleQuery])
@@ -191,11 +200,12 @@ def get_sample_queries():
     return SAMPLE_QUERIES
 
 # Serve Frontend static files if available
-frontend_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")
+frontend_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "frontend")
 if os.path.exists(frontend_dir):
     app.mount("/static", StaticFiles(directory=frontend_dir), name="static")
 
     @app.get("/")
+    @app.get("/index.html")
     def serve_frontend():
         index_file = os.path.join(frontend_dir, "index.html")
         if os.path.exists(index_file):
