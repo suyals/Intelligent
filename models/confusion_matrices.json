@@ -1,0 +1,102 @@
+{
+  "Priority": {
+    "labels": [
+      "High",
+      "Low",
+      "Medium"
+    ],
+    "matrix": [
+      [
+        326,
+        0,
+        0
+      ],
+      [
+        0,
+        337,
+        0
+      ],
+      [
+        0,
+        0,
+        337
+      ]
+    ]
+  },
+  "Category": {
+    "labels": [
+      "Academics & Examination",
+      "Campus Facilities & Transport",
+      "Finance & Accounts",
+      "Hostel & Housing",
+      "IT & Technical Support",
+      "Registrar & Student Records",
+      "Student Affairs & Clubs"
+    ],
+    "matrix": [
+      [
+        349,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        139,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        86,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        39,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        71,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        183,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        133
+      ]
+    ]
+  }
+}

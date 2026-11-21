@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intelligent Student Complaint Classification & Priority Prediction System</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%22><text y=%2226%22 font-size=%2224%22>🎓</text></svg>">
+  <!-- Chart.js CDN for Analytics Visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <!-- Brand Section -->
+      <div class="brand-section" data-tab="tab-analyzer">
+        <div class="brand-icon-wrapper">
+          <div class="brand-icon">🎓</div>
+        </div>
+        <div class="brand-text">
+          <h1>EduResolve AI</h1>
+          <span>Student Complaint & Priority Triage System</span>
+        </div>
+      </div>
+
+      <!-- Center Segmented Pill Navigation -->
+      <div class="nav-center">
+        <ul class="nav-links">
+          <li><button class="nav-btn active" data-tab="tab-analyzer"><span>📝</span> Complaint Analyzer</button></li>
+          <li><button class="nav-btn" data-tab="tab-batch"><span>⚡</span> Batch Testing</button></li>
+          <li><button class="nav-btn" data-tab="tab-analytics"><span>📊</span> Model Analytics</button></li>
+          <li><button class="nav-btn" data-tab="tab-architecture"><span>⚙️</span> Architecture</button></li>
+        </ul>
+      </div>
+
+      <!-- Action Items Right -->
+      <div class="nav-actions">
+        <!-- Live API Status Indicator with Radar Pulse -->
+        <div class="api-status-badge" title="FastAPI ML Backend Status">
+          <div class="status-dot-wrap">
+            <span class="status-dot online" id="status-dot"></span>
+          </div>
+          <span id="api-status-text">Backend: Connected</span>
+        </div>
+
+        <!-- Light / Dark Theme Toggle Button -->
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Light and Dark Mode" title="Toggle Theme (Light / Dark)">
+          <span id="theme-icon">🌙</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Header Banner -->
+  <header class="hero-section">
+    <div class="hero-container">
+      <div class="hero-badge">⚡ Automated NLP Grievance Triage Pipeline</div>
+      <h2 class="hero-title">Intelligent Student Complaint Classification & Priority Prediction System</h2>
+      <p class="hero-subtitle">
+        Leveraging advanced Natural Language Processing (NLP) and machine learning classifiers to automatically categorize student grievances into administrative departments and predict urgency priority for expedited SLA routing.
+      </p>
+
+      <!-- Stats Row -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon">📚</div>
+          <div class="stat-info">
+            <div class="stat-num">6,000</div>
+            <div class="stat-label">Verified Query Dataset</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🎯</div>
+          <div class="stat-info">
+            <div class="stat-num">100.0%</div>
+            <div class="stat-label">Model Test Accuracy</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🏢</div>
+          <div class="stat-info">
+            <div class="stat-num">7</div>
+            <div class="stat-label">College Departments</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⏱️</div>
+          <div class="stat-info">
+            <div class="stat-num">3 Tiers</div>
+            <div class="stat-label">Urgency SLA Routing</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+
+    <!-- TAB 1: Complaint Analyzer -->
+    <section id="tab-analyzer" class="tab-pane active">
+      <div class="analyzer-grid">
+
+        <!-- Input Column -->
+        <div class="card">
+          <div class="card-header">
+            <h2>✍️ Submit Student Complaint</h2>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Real-time ML Inference</span>
+          </div>
+          <div class="card-body">
+            <form id="complaint-form">
+              <div class="form-group">
+                <div class="label-row">
+                  <label for="complaint-input" class="form-label">Student Complaint / Inquiry Text:</label>
+                  <span class="char-counter" id="char-counter">0 / 1000 characters</span>
+                </div>
+                <textarea 
+                  id="complaint-input" 
+                  class="complaint-textarea" 
+                  placeholder="e.g., 'Internship deadline today, need NOC approval urgently.' or 'My fee payment failed but amount was deducted from my account.'"
+                  maxlength="1000"
+                  required
+                ></textarea>
+              </div>
+
+              <div class="btn-row">
+                <button type="submit" id="submit-btn" class="btn-primary">
+                  <span>🚀</span> Analyze Complaint
+                </button>
+                <button type="button" id="clear-btn" class="btn-secondary">
+                  Clear
+                </button>
+              </div>
+            </form>
+
+            <!-- Quick Presets -->
+            <div class="presets-section">
+              <div class="presets-title">💡 Try Dataset Query Samples:</div>
+              <div class="presets-chips" id="preset-chips">
+                <!-- Dynamically populated from API or fallbacks -->
+                <button class="preset-chip" data-query="Internship deadline today, need NOC approval.">🔥 Internship NOC Deadline</button>
+                <button class="preset-chip" data-query="My fee payment failed but amount deducted.">💳 Fee Payment Deducted</button>
+                <button class="preset-chip" data-query="I cannot submit my exam form and today is the last date.">⚠️ Exam Form Last Date</button>
+                <button class="preset-chip" data-query="How to apply for revaluation?">📑 Apply for Revaluation</button>
+                <button class="preset-chip" data-query="How can I apply for hostel change?">🏢 Hostel Room Change</button>
+                <button class="preset-chip" data-query="Please update my contact number.">📞 Update Contact Number</button>
+                <button class="preset-chip" data-query="WiFi password for campus?">📶 Campus WiFi Password</button>
+                <button class="preset-chip" data-query="What are library timings?">📖 Library Timings</button>
+                <button class="preset-chip" data-query="How to join sports club?">⚽ Sports Club Joining</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Output Prediction Column -->
+        <div class="card">
+          <div class="card-header">
+            <h2>🎯 Automated Classification & Triage</h2>
+            <span id="analysis-time" style="font-size: 0.75rem; color: var(--text-muted);">Waiting for input</span>
+          </div>
+          <div class="card-body">
+
+            <!-- Empty State -->
+            <div id="empty-state" class="empty-state">
+              <div class="empty-icon">📋</div>
+              <h3>No Complaint Analyzed Yet</h3>
+              <p>Type a student complaint in the input box on the left or select any sample query to see real-time categorization and priority prediction.</p>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loading-state" class="loading-state">
+              <div class="spinner"></div>
+              <h4>Analyzing Grievance with NLP & ML...</h4>
+              <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Cleaning text, computing TF-IDF n-grams, and calculating class probabilities...</p>
+            </div>
+
+            <!-- Results Display -->
+            <div id="results-display" class="results-content" style="display: none;">
+
+              <!-- Primary Badges (Category & Priority) -->
+              <div class="result-banner">
+                <!-- Category Card -->
+                <div class="badge-card">
+                  <div class="badge-header">
+                    <span>Department Category</span>
+                    <span>🏛️</span>
+                  </div>
+                  <div class="category-name" id="res-category">-</div>
+                  <div class="confidence-bar-wrapper">
+                    <div class="confidence-text">
+                      <span>Model Confidence:</span>
+                      <span id="res-category-conf">0%</span>
+                    </div>
+                    <div class="progress-track">
+                      <div class="progress-fill" id="res-category-bar" style="width: 0%;"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Priority Card -->
+                <div class="badge-card" id="priority-card">
+                  <div class="badge-header">
+                    <span>Priority Level</span>
+                    <span id="priority-icon">🔥</span>
+                  </div>
+                  <div class="badge-val" id="res-priority">-</div>
+                  <div class="confidence-bar-wrapper">
+                    <div class="confidence-text">
+                      <span>Confidence Score:</span>
+                      <span id="res-priority-conf">0%</span>
+                    </div>
+                    <div class="progress-track">
+                      <div class="progress-fill" id="res-priority-bar" style="width: 0%;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SLA & Action Banner -->
+              <div class="sla-banner">
+                <div class="sla-icon">⏱️</div>
+                <div>
+                  <div class="sla-title">Expected Resolution SLA & Action Protocol</div>
+                  <div class="sla-desc" id="res-sla">-</div>
+                  <div style="font-size: 0.8rem; color: #166534; margin-top: 0.2rem;" id="res-action">-</div>
+                </div>
+              </div>
+
+              <!-- Contributing Features -->
+              <div class="detail-box">
+                <div class="detail-header">
+                  <span>🔍 Key Contributing TF-IDF Features & Terms:</span>
+                </div>
+                <div class="keywords-wrap" id="res-keywords">
+                  <!-- Pills added here -->
+                </div>
+              </div>
+
+              <!-- Model Explanation -->
+              <div class="detail-box">
+                <div class="detail-header">
+                  <span>💡 Automated Classification Explanation:</span>
+                </div>
+                <p class="detail-text" id="res-explanation">-</p>
+              </div>
+
+              <!-- Class Probabilities Dropdown/Accordion -->
+              <div class="detail-box">
+                <div class="detail-header" style="justify-content: space-between; cursor: pointer;" id="toggle-probs-btn">
+                  <span>📊 Priority Probability Breakdown</span>
+                  <span id="prob-toggle-icon">▼</span>
+                </div>
+                <div id="prob-breakdown-content" class="prob-list">
+                  <!-- Filled dynamically -->
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- How It Works Section Embedded on Analyzer Tab -->
+      <section class="pipeline-section">
+        <div class="pipeline-header">
+          <h2>How The System Works</h2>
+          <p>End-to-End NLP & Machine Learning Complaint Processing Pipeline</p>
+        </div>
+        <div class="pipeline-steps">
+          <div class="step-card">
+            <div class="step-badge">1</div>
+            <div class="step-title">Complaint Input</div>
+            <div class="step-desc">Student enters grievance text via web portal or student service desk.</div>
+          </div>
+          <div class="step-card">
+            <div class="step-badge">2</div>
+            <div class="step-title">NLP Preprocessing</div>
+            <div class="step-desc">Contraction expansion, lowercase normalization, regex filtering, and whitespace collapsing.</div>
+          </div>
+          <div class="step-card">
+            <div class="step-badge">3</div>
+            <div class="step-title">TF-IDF Vectorizer</div>
+            <div class="step-desc">Extracts sublinear unigram & bigram features weighted by Inverse Document Frequency.</div>
+          </div>
+          <div class="step-card">
+            <div class="step-badge">4</div>
+            <div class="step-title">ML Classifiers</div>
+            <div class="step-desc">Selected high-performance Logistic Regression with probability calibration.</div>
+          </div>
+          <div class="step-card">
+            <div class="step-badge">5</div>
+            <div class="step-title">Department & SLA</div>
+            <div class="step-desc">Routes ticket to canonical department (Finance, Exam, Registrar) with SLA priority.</div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- TAB 2: Batch Testing -->
+    <section id="tab-batch" class="tab-pane">
+      <div class="batch-section">
+        <div class="batch-card">
+          <div class="card-header" style="padding: 0 0 1rem 0; margin-bottom: 1rem;">
+            <h2>⚡ Batch Complaint Evaluation</h2>
+            <button id="load-test-batch-btn" class="btn-secondary" style="font-size: 0.8rem;">
+              📥 Load Test Dataset Samples (10 Queries)
+            </button>
+          </div>
+          <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1rem;">
+            Enter multiple student complaints (one per line) to evaluate batch classification performance and view tabular routing results.
+          </p>
+          <textarea id="batch-textarea" class="complaint-textarea" style="height: 160px;" placeholder="Enter one complaint per line..."></textarea>
+          
+          <div class="batch-controls">
+            <button id="run-batch-btn" class="btn-primary">
+              🚀 Run Batch Classification
+            </button>
+            <span id="batch-status-text" style="font-size: 0.85rem; color: var(--text-muted);">Ready to process queries</span>
+          </div>
+        </div>
+
+        <!-- Batch Results Table -->
+        <div class="card" id="batch-results-card" style="display: none;">
+          <div class="card-header">
+            <h2>📋 Batch Results (<span id="batch-count">0</span> complaints processed)</h2>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="data-table-wrap">
+              <table class="data-table" id="batch-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Student Complaint</th>
+                    <th>Department Category</th>
+                    <th>Category Conf.</th>
+                    <th>Priority</th>
+                    <th>Priority Conf.</th>
+                    <th>Resolution SLA</th>
+                  </tr>
+                </thead>
+                <tbody id="batch-tbody">
+                  <!-- Filled via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: Model Analytics & Dashboard -->
+    <section id="tab-analytics" class="tab-pane">
+      <div class="dashboard-grid">
+
+        <!-- Category Distribution Chart -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>🏢 Training Dataset: Department Category Distribution</h3>
+            <p>Class counts across 5,000 student grievance records</p>
+          </div>
+          <div class="chart-container">
+            <canvas id="categoryChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Priority Distribution Chart -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>⚖️ Priority Target Distribution (High / Medium / Low)</h3>
+            <p>Ground truth priority balance across training queries</p>
+          </div>
+          <div class="chart-container">
+            <canvas id="priorityChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Model Comparison Chart -->
+        <div class="chart-card" style="grid-column: 1 / -1;">
+          <div class="chart-header">
+            <h3>🏆 5-Fold Cross-Validation Performance Comparison</h3>
+            <p>Evaluating Accuracy, Precision, Recall, and F1-Score across 4 candidate classifiers</p>
+          </div>
+          <div class="chart-container" style="height: 320px;">
+            <canvas id="comparisonChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Confusion Matrix for Priority -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>🎯 Priority Confusion Matrix (1,000 Test Records)</h3>
+            <p>Ground truth vs predicted priority on unseen test dataset</p>
+          </div>
+          <div class="matrix-wrap" id="priority-cm-container">
+            <!-- Dynamic Matrix Table -->
+          </div>
+        </div>
+
+        <!-- Final Test Evaluation Metrics Table -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>📊 Test Set Benchmark Metrics (Test: 1,000 Samples)</h3>
+            <p>Selected Winner: Logistic Regression (C=1.0, L2 penalty, sublinear TF-IDF)</p>
+          </div>
+          <div class="data-table-wrap" style="margin-top: 1rem;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Metric</th>
+                  <th>Priority Model</th>
+                  <th>Category Model</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Accuracy</strong></td>
+                  <td><span class="badge-winner">100.0%</span></td>
+                  <td><span class="badge-winner">100.0%</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Weighted Precision</strong></td>
+                  <td>1.0000</td>
+                  <td>1.0000</td>
+                </tr>
+                <tr>
+                  <td><strong>Weighted Recall</strong></td>
+                  <td>1.0000</td>
+                  <td>1.0000</td>
+                </tr>
+                <tr>
+                  <td><strong>Weighted F1-Score</strong></td>
+                  <td><span class="badge-winner">1.0000</span></td>
+                  <td><span class="badge-winner">1.0000</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Macro F1-Score</strong></td>
+                  <td>1.0000</td>
+                  <td>1.0000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 4: System Architecture -->
+    <section id="tab-architecture" class="tab-pane">
+      <div class="card" style="margin-bottom: 2rem;">
+        <div class="card-header">
+          <h2>📐 Comprehensive System Architecture & Design</h2>
+        </div>
+        <div class="card-body">
+          <div style="font-size: 0.95rem; color: #334155; line-height: 1.7;">
+            <h3 style="font-size: 1.15rem; color: var(--primary); margin-bottom: 0.75rem;">1. Data Pipeline & Schema Discovery</h3>
+            <p>The system was built upon the actual datasets provided in the <code>data/</code> directory:</p>
+            <ul style="margin: 0.5rem 0 1rem 1.5rem;">
+              <li><code>data/student_query_train_5000.csv</code>: 5,000 labeled records with schema <code>(ID, Student_Query, Priority)</code>.</li>
+              <li><code>data/student_query_test_1000.csv</code>: 1,000 labeled records with identical schema.</li>
+              <li><strong>Zero missing values</strong>: Complete data integrity across all columns.</li>
+              <li><strong>Ground-Truth Target</strong>: <code>Priority</code> (3 balanced classes: High, Medium, Low).</li>
+              <li><strong>Domain Categorization</strong>: 7 functional institutional departments (Academics & Examination, Finance & Accounts, Registrar & Student Records, IT & Technical Support, Hostel & Housing, Campus Facilities & Transport, Student Affairs & Clubs).</li>
+            </ul>
+
+            <h3 style="font-size: 1.15rem; color: var(--primary); margin-bottom: 0.75rem; margin-top: 1.5rem;">2. NLP Preprocessing & Feature Engineering</h3>
+            <p>Incoming student queries undergo rigorous natural language normalization:</p>
+            <ul style="margin: 0.5rem 0 1rem 1.5rem;">
+              <li><strong>Text Normalization:</strong> Lowercase transformation and contraction expansion (e.g. <em>"can't"</em> &rarr; <em>"cannot"</em>).</li>
+              <li><strong>Regex Tokenization:</strong> Stripping extraneous symbols and punctuation while preserving alphanumeric tokens.</li>
+              <li><strong>TF-IDF Vectorization:</strong> Sublinear TF scaling with <code>ngram_range=(1, 2)</code> (unigrams + bigrams), filtering English stop words, producing 162 robust lexical features.</li>
+            </ul>
+
+            <h3 style="font-size: 1.15rem; color: var(--primary); margin-bottom: 0.75rem; margin-top: 1.5rem;">3. Model Selection & Cross-Validation Methodology</h3>
+            <p>Four candidate classification algorithms were benchmarked using 5-Fold Stratified Cross-Validation on the training dataset to ensure zero data leakage:</p>
+            <ul style="margin: 0.5rem 0 1rem 1.5rem;">
+              <li><strong>Logistic Regression</strong> (Selected): Maximum entropy model providing calibrated class probabilities and interpretability.</li>
+              <li><strong>Calibrated Linear SVM</strong>: Linear Support Vector Machine with 3-fold Platt calibration.</li>
+              <li><strong>Multinomial Naive Bayes</strong>: Probabilistic bag-of-words classifier with Laplace smoothing.</li>
+              <li><strong>Random Forest Classifier</strong>: Ensemble of decision trees.</li>
+            </ul>
+
+            <h3 style="font-size: 1.15rem; color: var(--primary); margin-bottom: 0.75rem; margin-top: 1.5rem;">4. Explainability & Triage Automation</h3>
+            <p>The system generates transparent reasoning for every prediction by calculating the most influential TF-IDF feature weights for each query and matching them against institutional priority rules and departmental SLAs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>
+      <strong>Intelligent Student Complaint Classification & Priority Prediction System</strong> &bull;
+      College Administration & Student Support Portal &bull; FastAPI + Scikit-Learn + Vanilla JS
+    </p>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
+

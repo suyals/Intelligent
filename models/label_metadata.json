@@ -1,0 +1,48 @@
+{
+  "priority_classes": [
+    "High",
+    "Low",
+    "Medium"
+  ],
+  "category_classes": [
+    "Academics & Examination",
+    "Campus Facilities & Transport",
+    "Finance & Accounts",
+    "Hostel & Housing",
+    "IT & Technical Support",
+    "Registrar & Student Records",
+    "Student Affairs & Clubs"
+  ],
+  "query_category_map": {
+    "I am unable to access exam hall ticket.": "Academics & Examination",
+    "I cannot submit my exam form and today is the last date.": "Academics & Examination",
+    "I missed my exam registration due to portal error.": "Academics & Examination",
+    "The assignment portal is not working before deadline.": "Academics & Examination",
+    "My result shows absent but I attended exam.": "Academics & Examination",
+    "How to apply for revaluation?": "Academics & Examination",
+    "Can I change my project guide?": "Academics & Examination",
+    "I want to change my elective subject.": "Academics & Examination",
+    "When will semester timetable be released?": "Academics & Examination",
+    "Holiday list for this semester?": "Academics & Examination",
+    "My fee payment failed but amount deducted.": "Finance & Accounts",
+    "Urgent: hostel fee payment not updated.": "Finance & Accounts",
+    "My scholarship has not been credited yet.": "Finance & Accounts",
+    "I need migration certificate process.": "Registrar & Student Records",
+    "Request for bonafide certificate.": "Registrar & Student Records",
+    "Degree certificate required urgently for job.": "Registrar & Student Records",
+    "Internship deadline today, need NOC approval.": "Registrar & Student Records",
+    "Please update my contact number.": "Registrar & Student Records",
+    "Where to collect ID card?": "Registrar & Student Records",
+    "WiFi password for campus?": "IT & Technical Support",
+    "How to reset student portal password?": "IT & Technical Support",
+    "How can I apply for hostel change?": "Hostel & Housing",
+    "Where is the auditorium located?": "Campus Facilities & Transport",
+    "When does cafeteria open?": "Campus Facilities & Transport",
+    "Bus schedule for weekend?": "Campus Facilities & Transport",
+    "What are library timings?": "Campus Facilities & Transport",
+    "Any cultural events this week?": "Student Affairs & Clubs",
+    "How to join sports club?": "Student Affairs & Clubs",
+    "I want to join a club in university.": "Student Affairs & Clubs",
+    "Is there any AI workshop this month?": "Student Affairs & Clubs"
+  }
+}

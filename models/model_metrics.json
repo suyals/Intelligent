@@ -1,0 +1,293 @@
+{
+  "dataset_summary": {
+    "train_total": 5000,
+    "test_total": 1000,
+    "priority_distribution_train": {
+      "High": 1699,
+      "Medium": 1662,
+      "Low": 1639
+    },
+    "priority_distribution_test": {
+      "Low": 337,
+      "Medium": 337,
+      "High": 326
+    },
+    "category_distribution_train": {
+      "Academics & Examination": 1678,
+      "Registrar & Student Records": 1016,
+      "Student Affairs & Clubs": 670,
+      "Campus Facilities & Transport": 664,
+      "Finance & Accounts": 514,
+      "IT & Technical Support": 320,
+      "Hostel & Housing": 138
+    },
+    "category_distribution_test": {
+      "Academics & Examination": 349,
+      "Registrar & Student Records": 183,
+      "Campus Facilities & Transport": 139,
+      "Student Affairs & Clubs": 133,
+      "Finance & Accounts": 86,
+      "IT & Technical Support": 71,
+      "Hostel & Housing": 39
+    },
+    "vocabulary_features": 162
+  },
+  "model_comparison": {
+    "Priority": {
+      "candidates": {
+        "Logistic Regression": {
+          "cv_accuracy": 1.0,
+          "cv_precision": 1.0,
+          "cv_recall": 1.0,
+          "cv_f1": 1.0
+        },
+        "Calibrated Linear SVM": {
+          "cv_accuracy": 1.0,
+          "cv_precision": 1.0,
+          "cv_recall": 1.0,
+          "cv_f1": 1.0
+        },
+        "Multinomial Naive Bayes": {
+          "cv_accuracy": 1.0,
+          "cv_precision": 1.0,
+          "cv_recall": 1.0,
+          "cv_f1": 1.0
+        },
+        "Random Forest": {
+          "cv_accuracy": 1.0,
+          "cv_precision": 1.0,
+          "cv_recall": 1.0,
+          "cv_f1": 1.0
+        }
+      },
+      "selected_model": "Logistic Regression"
+    },
+    "Category": {
+      "candidates": {
+        "Logistic Regression": {
+          "cv_accuracy": 1.0,
+          "cv_precision": 1.0,
+          "cv_recall": 1.0,
+          "cv_f1": 1.0
+        },
+        "Calibrated Linear SVM": {
+          "cv_accuracy": 1.0,
+          "cv_precision": 1.0,
+          "cv_recall": 1.0,
+          "cv_f1": 1.0
+        },
+        "Multinomial Naive Bayes": {
+          "cv_accuracy": 1.0,
+          "cv_precision": 1.0,
+          "cv_recall": 1.0,
+          "cv_f1": 1.0
+        },
+        "Random Forest": {
+          "cv_accuracy": 1.0,
+          "cv_precision": 1.0,
+          "cv_recall": 1.0,
+          "cv_f1": 1.0
+        }
+      },
+      "selected_model": "Logistic Regression"
+    }
+  },
+  "final_evaluations": {
+    "Priority": {
+      "model_name": "Logistic Regression",
+      "test_accuracy": 1.0,
+      "test_precision_weighted": 1.0,
+      "test_recall_weighted": 1.0,
+      "test_f1_weighted": 1.0,
+      "test_f1_macro": 1.0,
+      "class_metrics": {
+        "High": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 326.0
+        },
+        "Low": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 337.0
+        },
+        "Medium": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 337.0
+        }
+      },
+      "classes": [
+        "High",
+        "Low",
+        "Medium"
+      ]
+    },
+    "Category": {
+      "model_name": "Logistic Regression",
+      "test_accuracy": 1.0,
+      "test_precision_weighted": 1.0,
+      "test_recall_weighted": 1.0,
+      "test_f1_weighted": 1.0,
+      "test_f1_macro": 1.0,
+      "class_metrics": {
+        "Academics & Examination": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 349.0
+        },
+        "Campus Facilities & Transport": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 139.0
+        },
+        "Finance & Accounts": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 86.0
+        },
+        "Hostel & Housing": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 39.0
+        },
+        "IT & Technical Support": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 71.0
+        },
+        "Registrar & Student Records": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 183.0
+        },
+        "Student Affairs & Clubs": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 133.0
+        }
+      },
+      "classes": [
+        "Academics & Examination",
+        "Campus Facilities & Transport",
+        "Finance & Accounts",
+        "Hostel & Housing",
+        "IT & Technical Support",
+        "Registrar & Student Records",
+        "Student Affairs & Clubs"
+      ]
+    }
+  },
+  "confusion_matrices": {
+    "Priority": {
+      "labels": [
+        "High",
+        "Low",
+        "Medium"
+      ],
+      "matrix": [
+        [
+          326,
+          0,
+          0
+        ],
+        [
+          0,
+          337,
+          0
+        ],
+        [
+          0,
+          0,
+          337
+        ]
+      ]
+    },
+    "Category": {
+      "labels": [
+        "Academics & Examination",
+        "Campus Facilities & Transport",
+        "Finance & Accounts",
+        "Hostel & Housing",
+        "IT & Technical Support",
+        "Registrar & Student Records",
+        "Student Affairs & Clubs"
+      ],
+      "matrix": [
+        [
+          349,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          139,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          86,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          39,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          71,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          183,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          133
+        ]
+      ]
+    }
+  }
+}
